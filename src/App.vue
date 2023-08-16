@@ -1,4 +1,5 @@
 <template>
+    <h1>{{ postsCount }}</h1>
     <div class="post" v-for="post of allPosts">
       <h2>{{ post.title }}</h2>
       <p>{{ post.body }}</p>
@@ -6,7 +7,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 export default {
   name: 'App',
   /* computed: {
@@ -14,9 +15,11 @@ export default {
       this.$store.getters.allPosts
     }
   } */
-  computed:  mapGetters([ "allPosts" ]),
+  methods: mapActions(["fetchPosts"]),
+  computed:  mapGetters([ "allPosts", "postsCount" ]),
   mounted() {
-    this.$store.dispatch('fetchPosts')
+    //this.$store.dispatch('fetchPosts')
+    this.fetchPosts(5)
   }
 };
 </script>
