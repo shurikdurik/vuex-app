@@ -1,6 +1,7 @@
 <template>
+    <PostForm />
     <h1>{{ postsCount }}</h1>
-    <div class="post" v-for="post of allPosts">
+    <div class="post" v-for="post of validPosts">
       <h2>{{ post.title }}</h2>
       <p>{{ post.body }}</p>
     </div>
@@ -8,15 +9,19 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import PostForm from './components/PostForm.vue'
 export default {
   name: 'App',
+  components: {
+    PostForm
+  },
   /* computed: {
     allPosts() {
       this.$store.getters.allPosts
     }
   } */
   methods: mapActions(["fetchPosts"]),
-  computed:  mapGetters([ "allPosts", "postsCount" ]),
+  computed:  mapGetters([ "validPosts", "postsCount" ]),
   mounted() {
     //this.$store.dispatch('fetchPosts')
     this.fetchPosts(5)
@@ -32,6 +37,8 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  padding: 0 50px;
+
 }
 
 .post {
